@@ -13,18 +13,14 @@
   ],
   "author": "Ontje Helmich",
   "license": "MIT",
-  "bugs": {
-    "url": ""
-  },
   "node-red": {
     "nodes": {
       "countdown": "countdown.js"
     }
   },
   "repository": {
-    "private": true,
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ontje/node-red-contrib-countdown.git"
   },
   "homepage": "",
   "dependencies": {
