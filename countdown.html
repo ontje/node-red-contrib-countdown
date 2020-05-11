@@ -1,0 +1,94 @@
+<script type="text/x-red" data-template-name="countdown">
+  <div class="form-row">
+      <label for="node-input-topic"><i class="fa fa-tasks"></i> <span data-i18n="node-red:common.label.topic"></span></label>
+      <input type="text" id="node-input-topic">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-payloadTimerStart"><i class="fa fa-tag"></i> Timer On payload</label>
+    <input style="width:70%" type="text" id="node-input-payloadTimerStart">
+    <input type="hidden" id="node-input-payloadTimerStartType">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-payloadTimerStop"><i class="fa fa-tag"></i> Timer Off payload</label>
+    <input style="width:70%" type="text" id="node-input-payloadTimerStop">
+    <input type="hidden" id="node-input-payloadTimerStopType">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-timer"><i class="fa fa-clock-o"></i> Countdown (secs)</label>
+    <input style="width:15%" type="text" id="node-input-timer" placeholder="30">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-resetWhileRunning">&nbsp;</label>
+    <input style="display:inline-block; width:15px; vertical-align:baseline;" type="checkbox" id="node-input-resetWhileRunning">
+    <span>Restart countdown if message is recieved while running</span>&nbsp;
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-setTimeToNewWhileRunning">&nbsp;</label>
+    <input style="display:inline-block; width:15px; vertical-align:top;" type="checkbox" id="node-input-setTimeToNewWhileRunning">
+    <span style="display:inline-block; width:70%">Set time to new duration if control message is recieved while running</span>&nbsp;
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+      <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+  
+</script>
+
+<script type="text/x-red" data-help-name="countdown">
+    <h3>Countdown</h3>
+
+    <p>A simple countdown node. Starts countdown on any input. Immediatly ends countdown on payload <code>false</code> or <code>0</code>.
+      Sends a configurable payload on start and end of countdown on output 1
+      and remainining time in seconds on output 2 (while running). 
+      
+      Countdown time can be set dynamically by using a Message with topic set to 
+      <code>control</code> and a <code>number</code> as payload (number of seconds to count down).</p>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('countdown', {
+    category: "function",
+    color:"#ff66cc",
+    inputLabels: "Any input starts the timer",
+    outputLabels: ["Countdown start/stop messages", "Remaining time in seconds"],
+    defaults: {
+      name: { value: "" },
+      topic: { value: "" },
+      payloadTimerStart: { value: true, required: true, validate: RED.validators.typedInput('payloadTimerStartType')}, 
+      payloadTimerStartType: { value: 'bool' },
+      payloadTimerStop: { value: false, required: true, validate: RED.validators.typedInput('payloadTimerStopType')}, 
+      payloadTimerStopType: { value: 'bool' },
+      timer: { value: 30, validate:RED.validators.number()  },
+      resetWhileRunning: { value: false },
+      setTimeToNewWhileRunning: { value: true }
+    },
+    inputs: 1,
+    outputs: 2,
+    icon: "stopwatch.png",
+    label: function() {
+        return this.name || "countdown";
+    },
+    labelStyle: function() {
+        return this.name ? "node_label_italic" : "";
+    },
+    oneditprepare: function() {
+      $('#node-input-payloadTimerStart').typedInput({
+        default: 'bool',
+        typeField: $("#node-input-payloadTimerStartType"),
+        types: ['msg','flow','global','str','num','bool','json','bin','re','date','env']
+      });
+
+      $('#node-input-payloadTimerStop').typedInput({
+        default: 'bool',
+        typeField: $("#node-input-payloadTimerStopType"),
+        types: ['msg','flow','global','str','num','bool','json','bin','re','date','env']
+      });
+    }
+  });
+</script>

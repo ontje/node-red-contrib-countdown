@@ -1,0 +1,33 @@
+{
+  "name": "node-red-contrib-countdown",
+  "version": "1.0.1",
+  "description": "A countdown that supports dynamic setting of (future) run time",
+  "main": "countdown.js",
+  "scripts": {},
+  "keywords": [
+    "node-red",
+    "count down timer",
+    "countdown",
+    "timer",
+    "timeout"
+  ],
+  "author": "Ontje Helmich",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "node-red": {
+    "nodes": {
+      "countdown": "countdown.js"
+    }
+  },
+  "repository": {
+    "private": true,
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "is-number": "^7.0.0"
+  }
+}
