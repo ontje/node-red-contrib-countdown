@@ -91,6 +91,7 @@ module.exports = function(RED) {
                     timeout = Math.ceil(msg.payload);
 
                     if (ticker) {
+                        // countdown is running
                         if (node.config.setTimeToNewWhileRunning) {
                             ticks = msg.payload;
                             node.status({
@@ -98,9 +99,15 @@ module.exports = function(RED) {
                             });
                         }
                     } else {
-                        node.status({
-                            fill: "red", shape: "dot", text: "Stopped: "+ timeout
-                        });
+                        // countdown is stopped
+                        if (node.config.startCountdownOnControlMessage) {
+                            startTimer();
+                        } else {
+                            node.status({
+                                fill: "red", shape: "dot", text: "Stopped: "+ timeout
+                            });
+                        }
+             
                     }
                 } else {
                     // do nothing

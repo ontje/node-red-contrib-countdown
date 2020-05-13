@@ -34,6 +34,12 @@
   </div>
 
   <div class="form-row">
+    <label for="node-input-startCountdownOnControlMessage">&nbsp;</label>
+    <input style="display:inline-block; width:15px; vertical-align:top;" type="checkbox" id="node-input-startCountdownOnControlMessage">
+    <span style="display:inline-block; width:70%">Start countdown if control message is recieved while not running</span>&nbsp;
+  </div>
+
+  <div class="form-row">
       <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
       <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
   </div>
@@ -66,7 +72,8 @@
       payloadTimerStopType: { value: 'bool' },
       timer: { value: 30, validate:RED.validators.number()  },
       resetWhileRunning: { value: false },
-      setTimeToNewWhileRunning: { value: true }
+      setTimeToNewWhileRunning: { value: true },
+      startCountdownOnControlMessage: { value: false }
     },
     inputs: 1,
     outputs: 2,
