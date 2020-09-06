@@ -66,9 +66,9 @@
     defaults: {
       name: { value: "" },
       topic: { value: "" },
-      payloadTimerStart: { value: true, required: true, validate: RED.validators.typedInput('payloadTimerStartType')}, 
+      payloadTimerStart: { value: true, validate: RED.validators.typedInput('payloadTimerStartType')}, 
       payloadTimerStartType: { value: 'bool' },
-      payloadTimerStop: { value: false, required: true, validate: RED.validators.typedInput('payloadTimerStopType')}, 
+      payloadTimerStop: { value: false, validate: RED.validators.typedInput('payloadTimerStopType')}, 
       payloadTimerStopType: { value: 'bool' },
       timer: { value: 30, validate:RED.validators.number()  },
       resetWhileRunning: { value: false },
@@ -85,16 +85,18 @@
         return this.name ? "node_label_italic" : "";
     },
     oneditprepare: function() {
+      var optionNothing = { value: "nul", label: "Nothing", hasValue: false};
+
       $('#node-input-payloadTimerStart').typedInput({
         default: 'bool',
         typeField: $("#node-input-payloadTimerStartType"),
-        types: ['msg','flow','global','str','num','bool','json','bin','re','date','env']
+        types: ['msg','flow','global','str','num','bool','json','bin','re','date','env', optionNothing]
       });
 
       $('#node-input-payloadTimerStop').typedInput({
         default: 'bool',
         typeField: $("#node-input-payloadTimerStopType"),
-        types: ['msg','flow','global','str','num','bool','json','bin','re','date','env']
+        types: ['msg','flow','global','str','num','bool','json','bin','re','date','env', optionNothing]
       });
     }
   });

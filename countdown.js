@@ -30,7 +30,11 @@ module.exports = function(RED) {
                 msg.topic = node.config.topic;
             }
 
-            node.send([msg, null]);
+            // only send stop msg if type is not equal "send nothing" option
+            if (node.config.payloadTimerStartType !== "nul") {
+                node.send([msg, null]);
+            }
+
 
             if (!ticker) {
                 ticker = setInterval(function() { node.emit("TIX"); }, 1000);
@@ -50,7 +54,13 @@ module.exports = function(RED) {
             }
 
             var remainingTicksMsg = { "payload": 0 };
-            node.send([msg, remainingTicksMsg]);
+
+            // only send stop msg if type is not equal "send nothing" option
+            if (node.config.payloadTimerStopType == "nul") {
+                node.send([null, remainingTicksMsg]);
+            } else {
+                node.send([msg, remainingTicksMsg]);
+            }
 
             endTicker();
         }
