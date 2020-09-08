@@ -2,11 +2,11 @@
 `node-red-contrib-countdown` is a simple countdown node.  
 It starts a **countdown timer** on a received input `msg` and decreases the counter value (at the first output) until the countdown timer elapses. The countdown can be **stopped at any time**. Also the countdown timer can be set to any new countdown value at any time to **reload the timer** with a specific value.
 
-The output can **emit an arbitrary `msg`** with a desired `msg.payload` contents at the **start** of the timer as well as at the **timeout** of the countdown timer at its first output. The second output emits nothing at start or end of the countdown timer.  
+The output can **emit a `msg`** at its first output with an arbitrary `msg.payload` contents at the **start** of the timer as well as at the **stop** of the countdown timer.   
+At the **second Output** the node emits the remaining counter value every second.
 
 The node's outputs `msg` can optionally contain an arbitrary topic string.
 
-At the second Output the node emits the remaining counter value every second.
 
 Loosely based on prior work by Neil Cherry: https://github.com/linuxha/node-red-contrib-mytimeout
 
@@ -34,12 +34,11 @@ Loosely based on prior work by Neil Cherry: https://github.com/linuxha/node-red-
 ![node-settings](images/node-settings.png "Node properties")  
 **Fig. 2:** Node properties
 
-Node configuration is quite simple:
 
-#### Countdown value
+#### Countdown (secs) property
 Set the ***Countdown*** value to the desired countdown time in seconds. The timer will start with this countdown value to decrease the timer value (countdown start value).
 
-#### Additional `msg.topic`
+#### Topic
 The ***Topic*** can be set to any string value. This string is added to the output `msg` as an additional element `msg.topic`.  
 
 **Note:** No value is given to the topic.
@@ -47,7 +46,7 @@ The ***Topic*** can be set to any string value. This string is added to the outp
 #### Timer On payload, Timer Off payload
 Set the ***Timer On payload*** to any payload type and value which is sent when the counter starts.  
 Set the ***Timer Off payload*** to any payload type and value which is sent when the counter elapses.  
-In both cases, also nothing may be emitted.
+In both cases, also nothing to be emitted may be chosen.
 
 #### Flags
 You can configure the timer to
@@ -67,16 +66,8 @@ The node evaluates the following input `msg` types:
 
 ## Outputs
 The node contains two outputs:
-- The primary (upper) output emits an output `msg` at the countdown start/stop instant of time.
-- The secondary (lower) output emits the remaining time every second during the timer run.
-
-### Primary output
-The node starts countdown on any input `msg`, the contents of the **msg-object** equals to the timer register. The countdown timer immediately ends the countdown within the payload "false" or "0".
-The node sends a configurable payload on start and end of countdown on output 1 and remainining time in seconds on output 2 (while running).
-
-### Secondary output
-
-The secondary output emits a timer `msg` every second in the node dialog. The `msg.payload` holds the remaining counting válue.
+- The **primary output** (upper output) emits an output `msg` at the **countdown start/stop** instant of time.  These `msg.payload` contents are configurable
+- The **secondary output** (lower output) emits the **remaining time every second** during the timer runs. The `msg.payload` holds the remaining counting value
 
 
 ## Examples
