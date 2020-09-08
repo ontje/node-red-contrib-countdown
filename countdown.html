@@ -43,7 +43,7 @@
       <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
       <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
   </div>
-  
+
 </script>
 
 <script type="text/x-red" data-help-name="countdown">
@@ -51,24 +51,24 @@
 
     <p>A simple countdown node. Starts countdown on any input. Immediatly ends countdown on payload <code>false</code> or <code>0</code>.
       Sends a configurable payload on start and end of countdown on output 1
-      and remainining time in seconds on output 2 (while running). 
-      
-      Countdown time can be set dynamically by using a Message with topic set to 
+      and remainining time in seconds on output 2 (while running).
+
+      Countdown time can be set dynamically by using a Message with topic set to
       <code>control</code> and a <code>number</code> as payload (number of seconds to count down).</p>
 </script>
 
 <script type="text/javascript">
   RED.nodes.registerType('countdown', {
     category: "function",
-    color:"#ff66cc",
+    color:"#ffaaaa",
     inputLabels: "Any input starts the timer",
     outputLabels: ["Countdown start/stop messages", "Remaining time in seconds"],
     defaults: {
       name: { value: "" },
       topic: { value: "" },
-      payloadTimerStart: { value: true, validate: RED.validators.typedInput('payloadTimerStartType')}, 
+      payloadTimerStart: { value: true, validate: RED.validators.typedInput('payloadTimerStartType')},
       payloadTimerStartType: { value: 'bool' },
-      payloadTimerStop: { value: false, validate: RED.validators.typedInput('payloadTimerStopType')}, 
+      payloadTimerStop: { value: false, validate: RED.validators.typedInput('payloadTimerStopType')},
       payloadTimerStopType: { value: 'bool' },
       timer: { value: 30, validate:RED.validators.number()  },
       resetWhileRunning: { value: false },
