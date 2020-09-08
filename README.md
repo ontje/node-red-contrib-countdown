@@ -5,7 +5,7 @@ It starts a **countdown timer** on a received input `msg` and decreases the coun
 The output can **emit a `msg`** at its first output with an arbitrary `msg.payload` contents at the **start** of the timer as well as at the **stop** of the countdown timer.   
 At the **second Output** the node emits the remaining counter value every second.
 
-The node's outputs `msg` can optionally contain an arbitrary topic string.
+The node's output `msg` can optionally contain an arbitrary topic string.
 
 
 Loosely based on prior work by Neil Cherry: https://github.com/linuxha/node-red-contrib-mytimeout

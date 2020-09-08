@@ -47,14 +47,69 @@
 </script>
 
 <script type="text/x-red" data-help-name="countdown">
-    <h3>Countdown</h3>
+  <p>A simple countdown node. It starts countdown on any input. The countdown timer can be stopped immediately or can be reloaded with a new counter value during it runs.</p>
 
-    <p>A simple countdown node. Starts countdown on any input. Immediatly ends countdown on payload <code>false</code> or <code>0</code>.
-      Sends a configurable payload on start and end of countdown on output 1
-      and remainining time in seconds on output 2 (while running).
 
-      Countdown time can be set dynamically by using a Message with topic set to
-      <code>control</code> and a <code>number</code> as payload (number of seconds to count down).</p>
+  <h3>Input</h3>
+
+  <h4>Starting the timer</h4>
+  <dl class="message-properties">
+      <dt>payload
+          <span class="property-type"></span>
+      </dt>
+      <dd>any <code>msg.payload</code> that does not <em>stop the timer</em> or <em>reload the timer</em> <b>starts the timer</b>.</dd>
+  </dl>
+
+
+  <h4>Stopping the timer</h4>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">boolean | number</span>
+        </dt>
+        <dd>if <code>false</code> or <code>0</code>: Immediately <b>stops the timer</b>.</dd>
+    </dl>
+
+  <h4>Reloading the timer</h4>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">number</span>
+        </dt>
+        <dd><b>reloads the timer</b> with the desired <code>msg.payload</code> value.</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd>set to <code>control</code>.</dd>
+    </dl>
+
+  <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Primary output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type"></span></dt>
+                <dd>configurable output <code>msg</code> at the countdown start/stop.</dd>
+            </dl>
+        </li>
+        <li>Second output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">number</span></dt>
+                <dd>give the remaining time.</dd>
+            </dl>
+        </li>
+    </ol>
+
+
+
+
+  <h3>Details</h3>
+    <p>
+    <code>node-red-contrib-countdown</code> starts a countdown timer on a received input
+    <code>msg</code> and decreases the counter value until the countdown timer elapses.
+    The countdown can be <b>stopped at any time</b>.
+    Also the countdown timer can be set to any new countdown value at any time to <b>reload the timer</b> with a specific value.
+
+    At the <b>first output</b> the node can emit a <code>msg</code> with an arbitrary <code>msg.payload</code> contents at the <b>start</b> of the timer as well as at the <b>stop</b> of the countdown timer.
+    At the <b>second output</b> the node emits the remaining counter value every second.
+
+    The node's output <code>msg</code> can optionally contain an arbitrary topic string.
+    </p>
 </script>
 
 <script type="text/javascript">
