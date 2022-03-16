@@ -66,7 +66,7 @@ The node evaluates the following input `msg` types:
 
 ## Outputs
 The node contains two outputs:
-- The **primary output** (upper output) emits an output `msg` at the **countdown start/stop** instant of time.  These `msg.payload` contents are configurable
+- The **primary output** (upper output) emits an output `msg` at the **countdown start/stop** instant of time.  These `msg.payload` contents are configurable. If Option "Send Outputmessage on Reset" ist set, the message is send, when the timer is stopped. Otherwise, the Stop message will only by send, if the timer reaches zero.
 - The **secondary output** (lower output) emits the **remaining time every second** during the timer runs. The `msg.payload` holds the remaining counting value
 
 

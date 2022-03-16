@@ -41,7 +41,7 @@ module.exports = function(RED) {
             }
         }
 
-        function stopTimer() {
+        function stopTimer(onReset = false) {
             node.status({
                 fill: "red", shape: "dot", text: "Stopped: " + timeout
             });
@@ -59,7 +59,15 @@ module.exports = function(RED) {
             if (node.config.payloadTimerStopType == "nul") {
                 node.send([null, remainingTicksMsg]);
             } else {
-                node.send([msg, remainingTicksMsg]);
+                if (node.config.outputOnReset) {
+                    node.send([msg, remainingTicksMsg]);
+                } else {
+                    if (onReset) {
+                        node.send([null, remainingTicksMsg]);
+                    } else {
+                        node.send([msg, remainingTicksMsg]);
+                    }
+                }
             }
 
             endTicker();
@@ -124,7 +132,7 @@ module.exports = function(RED) {
                 }
             } else {
                 if (msg.payload === false || msg.payload === 0) {
-                    stopTimer();
+                    stopTimer(true);
                 } else {
                     if (ticker) {
                         if (node.config.resetWhileRunning) {
