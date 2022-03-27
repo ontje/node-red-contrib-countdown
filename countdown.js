@@ -13,6 +13,8 @@ module.exports = function(RED) {
         var ticks = -1;
         var timeout = parseInt(node.config.timer);
 
+        var stopMsg = {};
+
         this.status({ fill: "red", shape: "dot", text: "Stopped: " + timeout });
 
         function startTimer() {
@@ -48,7 +50,13 @@ module.exports = function(RED) {
 
             // Timer Message
             var msg = {}
-            msg.payload = RED.util.evaluateNodeProperty(node.config.payloadTimerStop, node.config.payloadTimerStopType, node); 
+
+            if (node.config.payloadTimerStopType === 'msg') {
+                msg = stopMsg;
+            } else {
+                msg.payload = RED.util.evaluateNodeProperty(node.config.payloadTimerStop, node.config.payloadTimerStopType, node); 
+            }
+            
             if (node.config.topic !== '') {
                 msg.topic = node.config.topic;
             }
@@ -131,7 +139,22 @@ module.exports = function(RED) {
                     // do nothing
                 }
             } else {
-                if (msg.payload === false || msg.payload === 0) {
+                // if payload type of stop message is msg, store it in stopMsg var
+                if (node.config.payloadTimerStopType === 'msg') {
+                    var prop = RED.util.evaluateNodeProperty(node.config.payloadTimerStop, node.config.payloadTimerStopType, node);
+                    if(msg.hasOwnProperty(prop)) {
+                        stopMsg = {
+                            "payload": msg[prop]
+                        };
+                    } else {
+                        node.warn("Property not set correctly! Input Message does not have property: " + prop);
+                        stopMsg = {
+                            "payload": prop
+                        };
+                    }
+                }
+
+                if (msg.payload === false || msg.payload === 0) {
                     stopTimer(true);
                 } else {
                     if (ticker) {
