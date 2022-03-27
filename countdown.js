@@ -139,7 +139,7 @@ module.exports = function(RED) {
                             "payload": msg[prop]
                         };
                     } else {
-                        node.warn("Property not set correctly Msg does not have " + prop);
+                        node.warn("Property not set correctly! Input Message does not have property: " + prop);
                         stopMsg = {
                             "payload": prop
                         };
