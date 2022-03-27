@@ -131,7 +131,7 @@ module.exports = function(RED) {
                     // do nothing
                 }
             } else {
-                if (msg.payload === false || msg.payload === 0) {
+                if (msg.payload === false || msg.payload === 0) {
                     stopTimer(true);
                 } else {
                     if (ticker) {
