@@ -65,6 +65,17 @@ module.exports = function(RED) {
             endTicker();
         }
 
+        function cancelTimer() {
+            node.status({
+                fill: "red", shape: "dot", text: "Cancelled: " + timeout
+            });
+
+            var remainingTicksMsg = { "payload": 0 };
+            node.send([null, remainingTicksMsg]);
+
+            endTicker();
+        }
+
         function endTicker() {
             if (ticker) {
                 clearInterval(ticker);
@@ -125,6 +136,8 @@ module.exports = function(RED) {
             } else {
                 if (msg.payload === false || msg.payload === 0) {
                     stopTimer();
+            } else if (msg.payload === "stop" || msg.payload === "cancel") {
+                cancelTimer()
                 } else {
                     if (ticker) {
                         if (node.config.resetWhileRunning) {
